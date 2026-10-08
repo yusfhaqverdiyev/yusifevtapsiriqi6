@@ -1,0 +1,87 @@
+﻿using System;
+using System.Windows.Forms;
+using WindowsFormsApp5;
+
+int num;
+int cehd = 0;
+
+public Form1()
+{
+    InitializeComponent();
+
+    textBox1.Enabled = false;
+    button1.Enabled = false;
+
+    errorProvider1.Clear();
+}
+
+private void yenioyunbtn_Click(object sender, EventArgs e)
+{
+    Random r = new Random();
+    num = r.Next(0, 101);
+
+    cehd = 0;
+
+    textBox1.Enabled = true;
+    button1.Enabled = true;
+
+    textBox1.Clear();
+    richTextBox1.Clear();
+    errorProvider1.Clear();
+
+    textBox1.Focus();
+}
+
+private void button1_Click(object sender, EventArgs e)
+{
+    errorProvider1.Clear();
+
+    if (string.IsNullOrWhiteSpace(textBox1.Text))
+    {
+        errorProvider1.SetError(textBox1, "Ədəd daxil edin!");
+        return;
+    }
+
+    int daxilEdilen;
+
+    if (!int.TryParse(textBox1.Text, out daxilEdilen))
+    {
+        errorProvider1.SetError(textBox1, "Yalnız ədəd daxil edin!");
+        return;
+    }
+
+    if (daxilEdilen < 0 || daxilEdilen > 100)
+    {
+        errorProvider1.SetError(textBox1, "0-100 arasında ədəd daxil edin!");
+        return;
+    }
+
+    cehd++;
+
+    if (daxilEdilen == num)
+    {
+        richTextBox1.Text = "Oyunu qazandınız\nCəhd sayı: " + cehd;
+
+        textBox1.Enabled = false;
+        button1.Enabled = false;
+    }
+    else
+    {
+        richTextBox1.Text = "Daxil edilən ədəd yanlışdır\nCəhd sayı: " + cehd;
+
+        if (daxilEdilen < num)
+        {
+            richTextBox1.AppendText("\nTəsadüfi ədəddən kiçikdir");
+        }
+        else
+        {
+            richTextBox1.AppendText("\nTəsadüfi ədəddən böyükdür");
+        }
+    }
+
+    textBox1.Clear();
+    textBox1.Focus();
+}
+
+ChatGPT is AI and can make mistakes.
+
